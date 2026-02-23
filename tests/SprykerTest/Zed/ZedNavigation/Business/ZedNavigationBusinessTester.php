@@ -98,7 +98,7 @@ class ZedNavigationBusinessTester extends Unit
             ->willReturn($hasContent);
         $cacheMock->expects($this->once())
             ->method('getNavigation')
-            ->will($this->returnValue($navigationData));
+            ->willReturn($navigationData);
 
         return $cacheMock;
     }

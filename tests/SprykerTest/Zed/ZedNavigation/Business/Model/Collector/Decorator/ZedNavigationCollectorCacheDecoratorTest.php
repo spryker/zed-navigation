@@ -53,11 +53,11 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         $navigationCollectorMock
             ->expects($this->once())
             ->method('getNavigation')
-            ->will($this->returnValue($expectedNavigation));
+            ->willReturn($expectedNavigation);
         $configMock
             ->expects($this->once())
             ->method('isNavigationCacheEnabled')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         //act
         $navigation = $navigationCollectorCacheDecorator->getNavigation(static::NAVIGATION_TYPE_MAIN);
@@ -92,7 +92,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         $configMock
             ->expects($this->once())
             ->method('isNavigationCacheEnabled')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         //act
         $navigation = $navigationCollectorCacheDecorator->getNavigation(static::NAVIGATION_TYPE_MAIN);
