@@ -34,6 +34,9 @@ class BackofficeNavigationItemCollectionRouterFilter implements BackofficeNaviga
     public function filterNavigationItemCollectionByRouteAccessibility(
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer {
+        if (APPLICATION === 'MERCHANT_PORTAL') {
+            return $navigationItemCollectionTransfer;
+        }
         $routeCollection = $this->routerFacade
             ->getBackofficeRouter()
             ->getRouteCollection();

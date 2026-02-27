@@ -233,4 +233,18 @@ class ZedNavigationConfig extends AbstractBundleConfig
     {
         return APPLICATION_ROOT_DIR . '/config/Zed/';
     }
+
+    /**
+     * @api
+     *
+     * @deprecated Added for BC reasons, would be removed in the future without replacement.
+     * Specification:
+     * - Defines if navigation should be added as global variable in Twig. This is added only for BC. Use `navigation()` and `breadcrumb()` functions in Twig instead.
+     *
+     * @return bool
+     */
+    public function isAddingGlobalVariables(): bool
+    {
+        return false;
+    }
 }

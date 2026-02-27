@@ -82,7 +82,9 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         $this->navigation = null;
 
         $twig = $this->addTwigFunctions($twig, $container);
-        $twig = $this->addTwigGlobalVariables($twig, $container);
+        if ($this->getConfig()->isAddingGlobalVariables()) {
+            $twig = $this->addTwigGlobalVariables($twig, $container);
+        }
 
         return $twig;
     }
