@@ -9,10 +9,5 @@ namespace Spryker\Zed\ZedNavigation\Business\Filter;
 
 interface NavigationItemFilterInterface
 {
-    /**
-     * @param array $navigationItems
-     *
-     * @return array
-     */
     public function filterNavigationItems(array $navigationItems): array;
 }

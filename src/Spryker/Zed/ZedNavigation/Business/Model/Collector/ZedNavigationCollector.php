@@ -37,11 +37,6 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
      */
     protected $navigationDefinition;
 
-    /**
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface $navigationSchemaFinder
-     * @param \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface $mergeNavigationStrategyResolver
-     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
-     */
     public function __construct(
         ZedNavigationSchemaFinderInterface $navigationSchemaFinder,
         MergeNavigationStrategyResolverInterface $mergeNavigationStrategyResolver,

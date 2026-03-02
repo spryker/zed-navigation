@@ -27,9 +27,6 @@ class BuildNavigationConsole extends Console
      */
     public const DESCRIPTION = 'Build the navigation tree and persist it';
 
-    /**
-     * @return void
-     */
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
@@ -39,12 +36,6 @@ class BuildNavigationConsole extends Console
         parent::configure();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getMessenger()->info('Build navigation cache');

@@ -45,11 +45,6 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER = 'PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addUrlBuilder($container);
@@ -61,11 +56,6 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUrlBuilder(Container $container): Container
     {
         $container->set(static::URL_BUILDER, function () {
@@ -75,11 +65,6 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_ENCODING, function (Container $container) {
@@ -107,11 +92,6 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addNavigationItemCollectionFilterPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER, function () {
@@ -139,11 +119,6 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addRouterFacade(Container $container): Container
     {
         $container->set(static::FACADE_ROUTER, function (Container $container) {

@@ -89,12 +89,6 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\Environment
-     */
     protected function addTwigFunctions(Environment $twig, ContainerInterface $container): Environment
     {
         $twig->addFunction($this->getNavigationFunction($container));
@@ -123,11 +117,6 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         return $twig;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getNavigationFunction(ContainerInterface $container): TwigFunction
     {
         $navigation = new TwigFunction(static::TWIG_FUNCTION_NAME_NAVIGATION, function (?string $navigationType = null) use ($container) {
@@ -140,11 +129,6 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         return $navigation;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getBreadcrumbFunction(ContainerInterface $container): TwigFunction
     {
         $navigation = new TwigFunction(static::TWIG_FUNCTION_NAME_BREADCRUMBS, function () use ($container) {
@@ -157,11 +141,6 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         return $navigation;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function getRequest(ContainerInterface $container): Request
     {
         if ($container->has(static::SERVICE_REQUEST_STACK)) {
@@ -203,21 +182,11 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         return $navigation;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\RequestStack
-     */
     protected function getRequestStack(ContainerInterface $container): RequestStack
     {
         return $container->get(static::SERVICE_REQUEST_STACK);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function removeUriSuffix(string $path): string
     {
         $pattern = sprintf('/%s|%s/m', static::URI_SUFFIX_INDEX, static::URI_SUFFIX_SLASH);

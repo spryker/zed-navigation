@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
 
 interface BackofficeNavigationItemCollectionRouterFilterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
-     */
     public function filterNavigationItemCollectionByRouteAccessibility(
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer;

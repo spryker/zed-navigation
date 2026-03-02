@@ -24,9 +24,6 @@ use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
  */
 class ZedNavigationCacheBuilderTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return void
-     */
     public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache(): void
     {
         //prepare

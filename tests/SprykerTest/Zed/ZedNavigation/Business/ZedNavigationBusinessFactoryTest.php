@@ -21,9 +21,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
  */
 class ZedNavigationBusinessFactoryTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return void
-     */
     public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance(): void
     {
         $instance = $this->getFactory()->createNavigationBuilder();

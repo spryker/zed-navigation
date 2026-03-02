@@ -28,9 +28,6 @@ use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
  */
 class ZedNavigationCacheTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return void
-     */
     public function tearDown(): void
     {
         parent::tearDown();
@@ -41,9 +38,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         }
     }
 
-    /**
-     * @return void
-     */
     public function testIsNavigationCacheHasContentMustReturnFalseOnNotExistsFile(): void
     {
         //prepare
@@ -53,9 +47,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $this->assertFalse($navigationCache->hasContent(''));
     }
 
-    /**
-     * @return void
-     */
     public function testIsNavigationCacheHasContentMustReturnTrue(): void
     {
         //prepare
@@ -65,9 +56,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $this->assertTrue($navigationCache->hasContent(__FILE__));
     }
 
-    /**
-     * @return void
-     */
     public function testSetMustSerializeGivenNavigationDataIntoFile(): void
     {
         //prepare
@@ -81,9 +69,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $this->assertTrue($navigationCache->isEnabled());
     }
 
-    /**
-     * @return void
-     */
     public function testGetMustReturnUnSerializedNavigationDataFromFile(): void
     {
         //prepare
@@ -99,9 +84,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $this->assertSame($navigationData, $cachedNavigationData);
     }
 
-    /**
-     * @return void
-     */
     public function testGetMustThrowExceptionIfCacheEnabledButCacheFileDoesNotExists(): void
     {
         //prepare
@@ -114,9 +96,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $navigationCache->getNavigation('');
     }
 
-    /**
-     * @return void
-     */
     public function testGetMustThrowExceptionIfCacheEnabledCacheFileGivenButEmpty(): void
     {
         //prepare
@@ -152,9 +131,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $this->assertSame($rawData, $utilEncodingService->encodeJson($navigationData));
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache
-     */
     protected function getZedNavigationCache(): ZedNavigationCache
     {
         $utilEncodingService = $this->getUtilEncodingService();
@@ -162,9 +138,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         return new ZedNavigationCache(true, $utilEncodingService);
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge
-     */
     protected function getUtilEncodingService(): ZedNavigationToUtilEncodingBridge
     {
         $navigationToUtilEncodingBridge = new ZedNavigationToUtilEncodingBridge(
@@ -174,9 +147,6 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         return $navigationToUtilEncodingBridge;
     }
 
-    /**
-     * @return string
-     */
     protected function getCacheFile(): string
     {
         $pathToFile = __DIR__ . DIRECTORY_SEPARATOR . 'navigation.cache';

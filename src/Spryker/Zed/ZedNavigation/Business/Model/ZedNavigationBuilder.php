@@ -50,13 +50,6 @@ class ZedNavigationBuilder
      */
     protected $zedNavigationConfig;
 
-    /**
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface $menuFormatter
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface $pathExtractor
-     * @param \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface $navigationItemFilter
-     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
-     */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
         MenuFormatterInterface $menuFormatter,

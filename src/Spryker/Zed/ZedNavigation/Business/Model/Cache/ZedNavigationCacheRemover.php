@@ -21,10 +21,6 @@ class ZedNavigationCacheRemover
      */
     protected $zedNavigationConfig;
 
-    /**
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
-     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
-     */
     public function __construct(
         ZedNavigationCacheInterface $navigationCache,
         ZedNavigationConfig $zedNavigationConfig
@@ -33,9 +29,6 @@ class ZedNavigationCacheRemover
         $this->zedNavigationConfig = $zedNavigationConfig;
     }
 
-    /**
-     * @return void
-     */
     public function removeNavigationCache(): void
     {
         foreach ($this->zedNavigationConfig->getCacheFilePaths() as $cacheFileName) {

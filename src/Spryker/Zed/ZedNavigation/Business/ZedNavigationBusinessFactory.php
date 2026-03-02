@@ -50,9 +50,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface
-     */
     public function createNavigationItemFilter(): NavigationItemFilterInterface
     {
         return new NavigationItemFilter(
@@ -73,9 +70,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheRemover
-     */
     public function createNavigationCacheRemover(): ZedNavigationCacheRemover
     {
         return new ZedNavigationCacheRemover(
@@ -149,9 +143,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface
-     */
     public function createMergeNavigationStrategyResolver(): MergeNavigationStrategyResolverInterface
     {
         return new MergeNavigationStrategyResolver(
@@ -163,17 +154,11 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
-     */
     public function createNavigationFullMergeStrategy(): NavigationMergeStrategyInterface
     {
         return new NavigationFullMergeStrategy();
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
-     */
     public function createBreadcrumbNavigationMergeStrategy(): NavigationMergeStrategyInterface
     {
         return new BreadcrumbNavigationMergeStrategy();
@@ -233,9 +218,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         return new UrlUniqueValidator();
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilterInterface
-     */
     public function createBackofficeNavigationItemCollectionRouterFilter(): BackofficeNavigationItemCollectionRouterFilterInterface
     {
         return new BackofficeNavigationItemCollectionRouterFilter(
@@ -243,9 +225,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface
-     */
     public function getRouterFacade(): ZedNavigationToRouterFacadeInterface
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::FACADE_ROUTER);

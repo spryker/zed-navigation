@@ -31,17 +31,11 @@ class ZedNavigationBusinessTester extends Unit
      */
     protected $tester;
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface
-     */
     protected function getFacade(): ZedNavigationFacadeInterface
     {
         return new ZedNavigationFacade();
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory
-     */
     protected function getFactory(): ZedNavigationBusinessFactory
     {
         return new ZedNavigationBusinessFactory();
@@ -114,12 +108,6 @@ class ZedNavigationBusinessTester extends Unit
             ->getMock();
     }
 
-    /**
-     * @param array $navigationItems
-     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
-     */
     protected function mapNavigationItemsToNavigationItemCollectionTransfer(
         array $navigationItems,
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
@@ -202,9 +190,6 @@ class ZedNavigationBusinessTester extends Unit
         $this->tester->setDependency(ZedNavigationDependencyProvider::FACADE_ROUTER, $this->buildZedNavigationToRouterFacadeBridge());
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface
-     */
     protected function buildZedNavigationToRouterFacadeBridge(): ZedNavigationToRouterFacadeInterface
     {
         $collection = new RouteCollection();
@@ -220,9 +205,6 @@ class ZedNavigationBusinessTester extends Unit
         return $zedNavigationToRouterFacadeBridgeMock;
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface
-     */
     protected function getFacadeWithCustomNavigationFile(): ZedNavigationFacadeInterface
     {
         $zedNavigationConfigMock = $this->buildZedNavigationConfigMock();
@@ -233,9 +215,6 @@ class ZedNavigationBusinessTester extends Unit
         return $zedNavigationFacade->setFactory($zedNavigationBusinessFactoryMock);
     }
 
-    /**
-     * @return \Spryker\Zed\ZedNavigation\ZedNavigationConfig
-     */
     protected function buildZedNavigationConfigMock(): ZedNavigationConfig
     {
         $zedNavigationConfig = $this->createPartialMock(ZedNavigationConfig::class, ['getNavigationSchemaPathPattern', 'getRootNavigationSchemaPaths']);
@@ -245,11 +224,6 @@ class ZedNavigationBusinessTester extends Unit
         return $zedNavigationConfig;
     }
 
-    /**
-     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
-     *
-     * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory
-     */
     protected function buildZedNavigationBusinessFactoryMock(ZedNavigationConfig $zedNavigationConfig): ZedNavigationBusinessFactory
     {
         $factory = new ZedNavigationBusinessFactory();

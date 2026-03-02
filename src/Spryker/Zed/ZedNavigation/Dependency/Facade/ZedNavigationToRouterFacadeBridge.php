@@ -24,9 +24,6 @@ class ZedNavigationToRouterFacadeBridge implements ZedNavigationToRouterFacadeIn
         $this->routerFacade = $routerFacade;
     }
 
-    /**
-     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
-     */
     public function getBackofficeRouter(): RouterInterface
     {
         return $this->routerFacade->getBackofficeRouter();

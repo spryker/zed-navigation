@@ -18,19 +18,11 @@ class BackofficeNavigationItemCollectionRouterFilter implements BackofficeNaviga
      */
     protected $routerFacade;
 
-    /**
-     * @param \Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface $routerFacade
-     */
     public function __construct(ZedNavigationToRouterFacadeInterface $routerFacade)
     {
         $this->routerFacade = $routerFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
-     */
     public function filterNavigationItemCollectionByRouteAccessibility(
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer {

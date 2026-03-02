@@ -26,34 +26,22 @@ use Symfony\Component\Finder\Finder;
  */
 class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         mkdir($this->getFixtureDirectory());
     }
 
-    /**
-     * @return void
-     */
     public function tearDown(): void
     {
         $fileSystem = new Filesystem();
         $fileSystem->remove($this->getFixtureDirectory());
     }
 
-    /**
-     * @return string
-     */
     private function getFixtureDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
 
-    /**
-     * @return void
-     */
     public function testGetSchemasShouldReturnIterateableFileCollection(): void
     {
         $schemaFinder = new ZedNavigationSchemaFinder([$this->getFixtureDirectory()]);

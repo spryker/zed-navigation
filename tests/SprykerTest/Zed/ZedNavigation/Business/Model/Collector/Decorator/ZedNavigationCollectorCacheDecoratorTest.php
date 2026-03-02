@@ -30,9 +30,6 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
      */
     protected const NAVIGATION_TYPE_MAIN = 'main';
 
-    /**
-     * @return void
-     */
     public function testIfCacheIsNotEnabledGetNavigationMustReturnNavigationFromCollector(): void
     {
         //prepare
@@ -69,9 +66,6 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         );
     }
 
-    /**
-     * @return void
-     */
     public function testIfCacheIsEnabledGetNavigationMustReturnNavigationFromCache(): void
     {
         //prepare
@@ -104,9 +98,6 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         );
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsCollectedNavigationWhenCacheIsEnabledButCacheDoesNotExists(): void
     {
         //prepare

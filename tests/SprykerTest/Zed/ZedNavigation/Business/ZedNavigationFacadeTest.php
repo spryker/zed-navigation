@@ -23,9 +23,6 @@ use Spryker\Zed\ZedNavigation\Communication\Plugin\BackofficeNavigationItemColle
  */
 class ZedNavigationFacadeTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return void
-     */
     public function testBuildNavigationShouldReturnArrayWithMenuAsKey(): void
     {
         $navigation = $this->getFacade()->buildNavigation('');
@@ -33,9 +30,6 @@ class ZedNavigationFacadeTest extends ZedNavigationBusinessTester
         $this->assertArrayHasKey('menu', $navigation);
     }
 
-    /**
-     * @return void
-     */
     public function testFilterNavigationItemCollectionByRouteAccessibility(): void
     {
         // Arrange
@@ -56,9 +50,6 @@ class ZedNavigationFacadeTest extends ZedNavigationBusinessTester
         $this->assertNotEquals($navigationItemCount, $navigationItemCollectionTransfer->getNavigationItems()->count());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
-     */
     protected function getNavigationWithoutFilterPlugins(): NavigationItemCollectionTransfer
     {
         $zedNavigationConfigMock = $this->buildZedNavigationConfigMock();

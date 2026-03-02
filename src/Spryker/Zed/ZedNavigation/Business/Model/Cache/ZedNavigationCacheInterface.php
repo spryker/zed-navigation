@@ -14,32 +14,11 @@ interface ZedNavigationCacheInterface
      */
     public function isEnabled();
 
-    /**
-     * @param array $navigation
-     * @param string $cacheFilePath
-     *
-     * @return void
-     */
     public function setNavigation(array $navigation, string $cacheFilePath): void;
 
-    /**
-     * @param string $cacheFilePath
-     *
-     * @return array
-     */
     public function getNavigation(string $cacheFilePath): array;
 
-    /**
-     * @param string $cacheFilePath
-     *
-     * @return bool
-     */
     public function hasContent(string $cacheFilePath): bool;
 
-    /**
-     * @param string $cacheFilePath
-     *
-     * @return void
-     */
     public function removeCache(string $cacheFilePath): void;
 }

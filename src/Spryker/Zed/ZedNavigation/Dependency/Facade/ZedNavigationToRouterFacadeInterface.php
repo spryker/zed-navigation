@@ -11,8 +11,5 @@ use Spryker\Zed\Router\Business\Router\RouterInterface;
 
 interface ZedNavigationToRouterFacadeInterface
 {
-    /**
-     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
-     */
     public function getBackofficeRouter(): RouterInterface;
 }

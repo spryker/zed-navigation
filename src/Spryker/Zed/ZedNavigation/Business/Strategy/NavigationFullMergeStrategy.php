@@ -12,21 +12,11 @@ use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 
 class NavigationFullMergeStrategy implements NavigationMergeStrategyInterface
 {
-    /**
-     * @return string
-     */
     public function getMergeStrategy(): string
     {
         return ZedNavigationConfig::FULL_MERGE_STRATEGY;
     }
 
-    /**
-     * @param \Laminas\Config\Config $navigationDefinition
-     * @param \Laminas\Config\Config $rootDefinition
-     * @param \Laminas\Config\Config $coreNavigationDefinition
-     *
-     * @return array
-     */
     public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, Config $coreNavigationDefinition): array
     {
         return $navigationDefinition->merge($rootDefinition)->toArray();

@@ -34,11 +34,6 @@ class BreadcrumbHelper extends Module
         }
     }
 
-    /**
-     * @param string $breadcrumb
-     *
-     * @return void
-     */
     public function seeBreadcrumbNavigation(string $breadcrumb): void
     {
         $this->checkBreadcrumbNavigation($breadcrumb);
@@ -69,11 +64,6 @@ class BreadcrumbHelper extends Module
         return $zedBootstrap;
     }
 
-    /**
-     * @param string $breadcrumb
-     *
-     * @return void
-     */
     protected function checkBreadcrumbNavigation(string $breadcrumb): void
     {
         $breadcrumbParts = explode('/', $breadcrumb);
@@ -104,11 +94,6 @@ class BreadcrumbHelper extends Module
         }
     }
 
-    /**
-     * @param array $breadcrumbParts
-     *
-     * @return void
-     */
     protected function checkBreadcrumbNavigationNative(array $breadcrumbParts): void
     {
         $driver = $this->getDriver();

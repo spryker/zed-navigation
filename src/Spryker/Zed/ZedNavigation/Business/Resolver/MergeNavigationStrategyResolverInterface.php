@@ -11,8 +11,5 @@ use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
 
 interface MergeNavigationStrategyResolverInterface
 {
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
-     */
     public function resolve(): NavigationMergeStrategyInterface;
 }

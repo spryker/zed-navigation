@@ -45,12 +45,6 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         return $this->isEnabled;
     }
 
-    /**
-     * @param array $navigation
-     * @param string $cacheFilePath
-     *
-     * @return void
-     */
     public function setNavigation(array $navigation, string $cacheFilePath): void
     {
         if (!is_dir(dirname($cacheFilePath))) {
@@ -83,11 +77,6 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         return $this->utilEncodingService->decodeJson($content, true);
     }
 
-    /**
-     * @param string $cacheFilePath
-     *
-     * @return bool
-     */
     public function hasContent(string $cacheFilePath): bool
     {
         clearstatcache(false, $cacheFilePath);
@@ -99,11 +88,6 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         return (bool)$cacheFileSized;
     }
 
-    /**
-     * @param string $cacheFilePath
-     *
-     * @return void
-     */
     public function removeCache(string $cacheFilePath): void
     {
         if (file_exists($cacheFilePath)) {

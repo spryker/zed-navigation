@@ -27,11 +27,6 @@ class ZedNavigationCacheBuilder
      */
     protected $zedNavigationConfig;
 
-    /**
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
-     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
-     */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
         ZedNavigationCacheInterface $navigationCache,

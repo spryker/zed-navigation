@@ -33,11 +33,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         $this->navigationItemCollectionFilterPlugins = $navigationItemCollectionFilterPlugins;
     }
 
-    /**
-     * @param array $navigationItems
-     *
-     * @return array
-     */
     public function filterNavigationItems(array $navigationItems): array
     {
         $navigationItemCollectionTransfer = new NavigationItemCollectionTransfer();
@@ -55,11 +50,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
-     */
     protected function applyNavigationItemCollectionFilterPlugins(
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer {
@@ -72,12 +62,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         return $navigationItemCollectionTransfer;
     }
 
-    /**
-     * @param array $navigationItems
-     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
-     *
-     * @return array
-     */
     protected function filterNavigationItemsByNavigationItemCollectionTransfer(
         array $navigationItems,
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
@@ -120,12 +104,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         return $filteredNavigationItems;
     }
 
-    /**
-     * @param array $navigationItems
-     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
-     */
     protected function mapNavigationItemsToNavigationItemCollectionTransfer(
         array $navigationItems,
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
@@ -162,11 +140,6 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         return isset($navigationItem[MenuFormatter::PAGES]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NavigationItemTransfer $navigationItemTransfer
-     *
-     * @return bool
-     */
     protected function isNavigationItemVisible(NavigationItemTransfer $navigationItemTransfer): bool
     {
         foreach ($this->navigationItemFilterPlugins as $navigationItemFilterPlugin) {
