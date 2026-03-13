@@ -100,7 +100,7 @@ class BreadcrumbHelper extends Module
         $position = 0;
 
         foreach ($breadcrumbParts as $breadcrumbPart) {
-            $driver->see($breadcrumbPart, sprintf('//ol[@class="breadcrumb"]/li[%s]', $position + 1));
+            $driver->see($breadcrumbPart, sprintf('//ol[@data-qa="breadcrumb"]/li[%s]', $position + 1));
             $position++;
         }
     }
