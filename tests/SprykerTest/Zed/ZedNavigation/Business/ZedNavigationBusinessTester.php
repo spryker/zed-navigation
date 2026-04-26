@@ -183,6 +183,14 @@ class ZedNavigationBusinessTester extends Unit
     }
 
     /**
+     * @param array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface> $plugins
+     */
+    protected function provideNavigationItemFilterPlugins(array $plugins = []): void
+    {
+        $this->tester->setDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER, $plugins);
+    }
+
+    /**
      * @return void
      */
     protected function provideRouterFacade()
@@ -222,6 +230,37 @@ class ZedNavigationBusinessTester extends Unit
         $zedNavigationConfig->method('getRootNavigationSchemaPaths')->willReturn([]);
 
         return $zedNavigationConfig;
+    }
+
+    protected function buildZedNavigationConfigMockForFileName(string $fileName): ZedNavigationConfig
+    {
+        $zedNavigationConfig = $this->createPartialMock(
+            ZedNavigationConfig::class,
+            [
+                'getNavigationSchemaPathPattern',
+                'getRootNavigationSchemaPaths',
+                'isNavigationCacheEnabled',
+                'getNavigationSchemaFileNamePatterns',
+                'getDefaultNavigationType',
+            ],
+        );
+        $zedNavigationConfig->method('getNavigationSchemaPathPattern')->willReturn([codecept_data_dir()]);
+        $zedNavigationConfig->method('getRootNavigationSchemaPaths')->willReturn([]);
+        $zedNavigationConfig->method('isNavigationCacheEnabled')->willReturn(false);
+        $zedNavigationConfig->method('getDefaultNavigationType')->willReturn('main');
+        $zedNavigationConfig->method('getNavigationSchemaFileNamePatterns')->willReturn(['main' => $fileName]);
+
+        return $zedNavigationConfig;
+    }
+
+    protected function getFacadeWithCustomNavigationFileName(string $fileName): ZedNavigationFacadeInterface
+    {
+        $zedNavigationConfigMock = $this->buildZedNavigationConfigMockForFileName($fileName);
+        $zedNavigationBusinessFactoryMock = $this->buildZedNavigationBusinessFactoryMock($zedNavigationConfigMock);
+
+        $zedNavigationFacade = new ZedNavigationFacade();
+
+        return $zedNavigationFacade->setFactory($zedNavigationBusinessFactoryMock);
     }
 
     protected function buildZedNavigationBusinessFactoryMock(ZedNavigationConfig $zedNavigationConfig): ZedNavigationBusinessFactory

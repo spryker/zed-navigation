@@ -33,6 +33,13 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         $this->navigationItemCollectionFilterPlugins = $navigationItemCollectionFilterPlugins;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param array<mixed> $navigationItems
+     *
+     * @return array<mixed>
+     */
     public function filterNavigationItems(array $navigationItems): array
     {
         $navigationItemCollectionTransfer = new NavigationItemCollectionTransfer();
@@ -62,6 +69,11 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         return $navigationItemCollectionTransfer;
     }
 
+    /**
+     * @param array<mixed> $navigationItems
+     *
+     * @return array<mixed>
+     */
     protected function filterNavigationItemsByNavigationItemCollectionTransfer(
         array $navigationItems,
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
@@ -73,58 +85,90 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         $filteredNavigationItems = [];
 
         foreach ($navigationItems as $navigationItem) {
-            if ($this->hasNestedNavigationItems($navigationItem)) {
-                $nestedNavigationItems = $this->filterNavigationItemsByNavigationItemCollectionTransfer(
-                    $navigationItem[MenuFormatter::PAGES],
-                    $navigationItemCollectionTransfer,
-                );
-
-                if ($nestedNavigationItems) {
-                    $navigationItem[MenuFormatter::PAGES] = $nestedNavigationItems;
-                    $filteredNavigationItems[] = $navigationItem;
-                }
-
-                continue;
-            }
-
-            $navigationItemKey = $this->getNavigationItemKey($navigationItem);
-
-            if (!$navigationItemCollectionTransfer->getNavigationItems()->offsetExists($navigationItemKey)) {
-                continue;
-            }
-
-            $navigationItemTransfer = $navigationItemCollectionTransfer->getNavigationItems()
-                ->offsetGet($navigationItemKey);
-
-            if ($this->isNavigationItemVisible($navigationItemTransfer)) {
+            if ($this->hasRouteKeys($navigationItem) && $this->isRouteNavigationItemVisible($navigationItem, $navigationItemCollectionTransfer)) {
                 $filteredNavigationItems[] = $navigationItem;
+            }
+
+            $filteredNestedNavigationItem = $this->filterNestedNavigationItem($navigationItem, $navigationItemCollectionTransfer);
+
+            if ($filteredNestedNavigationItem !== null) {
+                $filteredNavigationItems[] = $filteredNestedNavigationItem;
             }
         }
 
         return $filteredNavigationItems;
     }
 
+    /**
+     * @param array<mixed> $navigationItem
+     *
+     * @return array<mixed>|null
+     */
+    protected function filterNestedNavigationItem(
+        array $navigationItem,
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): ?array {
+        if (!$this->hasNestedNavigationItems($navigationItem)) {
+            return null;
+        }
+
+        $nestedNavigationItems = $this->filterNavigationItemsByNavigationItemCollectionTransfer(
+            $navigationItem[MenuFormatter::PAGES],
+            $navigationItemCollectionTransfer,
+        );
+
+        if (!$nestedNavigationItems) {
+            return null;
+        }
+
+        $navigationItem[MenuFormatter::PAGES] = $nestedNavigationItems;
+
+        return $navigationItem;
+    }
+
+    /**
+     * @param array<mixed> $navigationItem
+     */
+    protected function isRouteNavigationItemVisible(
+        array $navigationItem,
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): bool {
+        $navigationItemKey = $this->getNavigationItemKey($navigationItem);
+
+        if (!$navigationItemCollectionTransfer->getNavigationItems()->offsetExists($navigationItemKey)) {
+            return false;
+        }
+
+        $navigationItemTransfer = $navigationItemCollectionTransfer->getNavigationItems()
+            ->offsetGet($navigationItemKey);
+
+        return $this->isNavigationItemVisible($navigationItemTransfer);
+    }
+
+    /**
+     * @param array<mixed> $navigationItems
+     */
     protected function mapNavigationItemsToNavigationItemCollectionTransfer(
         array $navigationItems,
         NavigationItemCollectionTransfer $navigationItemCollectionTransfer
     ): NavigationItemCollectionTransfer {
         foreach ($navigationItems as $navigationItem) {
+            if ($this->hasRouteKeys($navigationItem)) {
+                $navigationItemTransfer = (new NavigationItemTransfer())
+                    ->fromArray($navigationItem, true)
+                    ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null);
+                $navigationItemCollectionTransfer->addNavigationItem(
+                    $this->getNavigationItemKey($navigationItem),
+                    $navigationItemTransfer,
+                );
+            }
+
             if ($this->hasNestedNavigationItems($navigationItem)) {
                 $navigationItemCollectionTransfer = $this->mapNavigationItemsToNavigationItemCollectionTransfer(
                     $navigationItem[MenuFormatter::PAGES],
                     $navigationItemCollectionTransfer,
                 );
-
-                continue;
             }
-
-            $navigationItemTransfer = (new NavigationItemTransfer())
-                ->fromArray($navigationItem, true)
-                ->setModule($navigationItem[MenuFormatter::BUNDLE] ?? null);
-            $navigationItemCollectionTransfer->addNavigationItem(
-                $this->getNavigationItemKey($navigationItem),
-                $navigationItemTransfer,
-            );
         }
 
         return $navigationItemCollectionTransfer;
@@ -132,12 +176,25 @@ class NavigationItemFilter implements NavigationItemFilterInterface
 
     /**
      * @param array<string, mixed> $navigationItem
-     *
-     * @return bool
      */
     protected function hasNestedNavigationItems(array $navigationItem): bool
     {
         return isset($navigationItem[MenuFormatter::PAGES]);
+    }
+
+    /**
+     * Navigation items that represent a Zed route carry bundle/controller/action keys.
+     * URI-only entries (e.g. external links, separators) do not, and are identified by their URI instead.
+     *
+     * @param array<string, mixed> $navigationItem
+     */
+    protected function hasRouteKeys(array $navigationItem): bool
+    {
+        return isset(
+            $navigationItem[MenuFormatter::BUNDLE],
+            $navigationItem[MenuFormatter::CONTROLLER],
+            $navigationItem[MenuFormatter::ACTION],
+        );
     }
 
     protected function isNavigationItemVisible(NavigationItemTransfer $navigationItemTransfer): bool
@@ -153,16 +210,10 @@ class NavigationItemFilter implements NavigationItemFilterInterface
 
     /**
      * @param array<string> $navigationItem
-     *
-     * @return string
      */
     protected function getNavigationItemKey(array $navigationItem): string
     {
-        if (
-            isset($navigationItem[MenuFormatter::BUNDLE])
-            && isset($navigationItem[MenuFormatter::CONTROLLER])
-            && isset($navigationItem[MenuFormatter::ACTION])
-        ) {
+        if ($this->hasRouteKeys($navigationItem)) {
             return sprintf(
                 '%s:%s:%s',
                 $navigationItem[MenuFormatter::BUNDLE],

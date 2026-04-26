@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config>
+    <dashboard>
+        <label>Dashboard</label>
+        <title>Dashboard</title>
+        <bundle>dashboard</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <icon>grid_view</icon>
+        <pages>
+            <dashboard-widget>
+                <label>Widget</label>
+                <title>Widget</title>
+                <bundle>dashboard-widget-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </dashboard-widget>
+        </pages>
+    </dashboard>
+    <users>
+        <label>Users</label>
+        <title>Users</title>
+        <icon>background_replace</icon>
+        <pages>
+            <user>
+                <label>Users</label>
+                <title>Users</title>
+                <bundle>user</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </user>
+            <roles>
+                <label>User Roles</label>
+                <title>Roles</title>
+                <bundle>acl</bundle>
+                <controller>role</controller>
+                <action>index</action>
+            </roles>
+            <groups>
+                <label>User Groups</label>
+                <title>Groups</title>
+                <bundle>acl</bundle>
+                <controller>group</controller>
+                <action>index</action>
+            </groups>
+        </pages>
+    </users>
+</config>
