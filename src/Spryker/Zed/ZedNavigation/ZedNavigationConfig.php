@@ -13,11 +13,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ZedNavigationConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var int
      */
     public const MAX_LEVEL_COUNT = 5;
 
     /**
+     * @api
+     *
      * Specification:
      *  - Strategy by which root navigation elements are being merged with core navigation elements.
      *
@@ -26,6 +30,8 @@ class ZedNavigationConfig extends AbstractBundleConfig
     public const FULL_MERGE_STRATEGY = 'fullMergeStrategy';
 
     /**
+     * @api
+     *
      * Specification:
      *  - Strategy by which root navigation elements are being merged with core navigation elements excluding first and second level.
      *
