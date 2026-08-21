@@ -18,6 +18,7 @@
     },
     "require-dev": {
         "php-webdriver/webdriver": "*",
+        "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/propel": "*",
