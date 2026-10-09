@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Strategy;
 
-use Laminas\Config\Config;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
@@ -33,10 +32,20 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
         return ZedNavigationConfig::BREADCRUMB_MERGE_STRATEGY;
     }
 
-    public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, Config $coreNavigationDefinition): array
-    {
-        $rootDefinitionData = $rootDefinition->toArray();
-        $coreNavigationDefinitionData = $coreNavigationDefinition->toArray();
+    /**
+     * @param array<mixed> $navigationDefinition
+     * @param array<mixed> $rootDefinition
+     * @param array<mixed> $coreNavigationDefinition
+     *
+     * @return array<mixed>
+     */
+    public function mergeNavigation(
+        array $navigationDefinition,
+        array $rootDefinition,
+        array $coreNavigationDefinition
+    ): array {
+        $rootDefinitionData = $rootDefinition;
+        $coreNavigationDefinitionData = $coreNavigationDefinition;
         foreach ($rootDefinitionData as &$rootNavigationElement) {
             if (!$this->hasPages($rootNavigationElement)) {
                 continue;

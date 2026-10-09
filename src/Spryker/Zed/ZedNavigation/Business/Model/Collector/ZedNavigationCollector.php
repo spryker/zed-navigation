@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ZedNavigation\Business\Model\Collector;
 
 use ErrorException;
-use Exception;
-use Laminas\Config\Config;
-use Laminas\Config\Factory;
+use Spryker\Service\UtilEncoding\Exception\XmlReadException;
+use Spryker\Zed\ZedNavigation\Business\Model\Merger\NavigationDefinitionMergerInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface;
 use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
+use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 
 class ZedNavigationCollector implements ZedNavigationCollectorInterface
@@ -40,11 +40,37 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     public function __construct(
         ZedNavigationSchemaFinderInterface $navigationSchemaFinder,
         MergeNavigationStrategyResolverInterface $mergeNavigationStrategyResolver,
-        ZedNavigationConfig $zedNavigationConfig
+        ZedNavigationConfig $zedNavigationConfig,
+        protected ZedNavigationToUtilEncodingInterface $utilEncodingService,
+        protected NavigationDefinitionMergerInterface $navigationDefinitionMerger
     ) {
         $this->navigationSchemaFinder = $navigationSchemaFinder;
         $this->mergeNavigationStrategyResolver = $mergeNavigationStrategyResolver;
         $this->zedNavigationConfig = $zedNavigationConfig;
+    }
+
+    /**
+     * A missing or unreadable root navigation schema is not an error: the navigation is then built
+     * from the module schemas alone. Previously a blanket `catch (Exception)` around the file read
+     * also absorbed the undefined-key warning for an unconfigured navigation type, so both cases
+     * are now handled explicitly instead.
+     *
+     * @param string $navigationType
+     *
+     * @return array<mixed>
+     */
+    protected function readRootNavigationDefinition(string $navigationType): array
+    {
+        $rootNavigationSchemaPaths = $this->zedNavigationConfig->getRootNavigationSchemaPaths();
+        if (!isset($rootNavigationSchemaPaths[$navigationType])) {
+            return [];
+        }
+
+        try {
+            return $this->utilEncodingService->convertXmlFileToArray($rootNavigationSchemaPaths[$navigationType]);
+        } catch (XmlReadException $exception) {
+            return [];
+        }
     }
 
     /**
@@ -60,25 +86,18 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             return $this->navigationDefinition;
         }
 
-        try {
-            /** @var \Laminas\Config\Config $navigationDefinition */
-            $navigationDefinition = Factory::fromFile($this->zedNavigationConfig->getRootNavigationSchemaPaths()[$navigationType], true);
-            $rootDefinition = clone $navigationDefinition;
-        } catch (Exception $e) {
-            $navigationDefinition = new Config([]);
-            $rootDefinition = new Config([]);
-        }
+        $navigationDefinition = $this->readRootNavigationDefinition($navigationType);
+        $rootDefinition = $navigationDefinition;
 
-        $coreNavigationDefinition = new Config([]);
+        $coreNavigationDefinition = [];
         $fileNamePattern = $this->zedNavigationConfig->getNavigationSchemaFileNamePatterns()[$navigationType];
         foreach ($this->navigationSchemaFinder->getSchemaFiles($fileNamePattern) as $moduleNavigationFile) {
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
             }
-            /** @var \Laminas\Config\Config $configFromFile */
-            $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
-            $navigationDefinition->merge($configFromFile);
-            $coreNavigationDefinition->merge($configFromFile);
+            $definitionFromFile = $this->utilEncodingService->convertXmlFileToArray($moduleNavigationFile->getPathname());
+            $navigationDefinition = $this->navigationDefinitionMerger->merge($navigationDefinition, $definitionFromFile);
+            $coreNavigationDefinition = $this->navigationDefinitionMerger->merge($coreNavigationDefinition, $definitionFromFile);
         }
 
         $navigationMergeStrategy = $this->mergeNavigationStrategyResolver->resolve();

@@ -19,6 +19,8 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCo
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
+use Spryker\Zed\ZedNavigation\Business\Model\Merger\NavigationDefinitionMerger;
+use Spryker\Zed\ZedNavigation\Business\Model\Merger\NavigationDefinitionMergerInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinder;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator;
@@ -111,6 +113,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
             $this->createNavigationSchemaFinder(),
             $this->createMergeNavigationStrategyResolver(),
             $this->getConfig(),
+            $this->getUtilEncodingService(),
+            $this->createNavigationDefinitionMerger(),
         );
     }
 
@@ -156,7 +160,12 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
 
     public function createNavigationFullMergeStrategy(): NavigationMergeStrategyInterface
     {
-        return new NavigationFullMergeStrategy();
+        return new NavigationFullMergeStrategy($this->createNavigationDefinitionMerger());
+    }
+
+    public function createNavigationDefinitionMerger(): NavigationDefinitionMergerInterface
+    {
+        return new NavigationDefinitionMerger();
     }
 
     public function createBreadcrumbNavigationMergeStrategy(): NavigationMergeStrategyInterface

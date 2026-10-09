@@ -27,4 +27,13 @@ interface ZedNavigationToUtilEncodingInterface
      * @return array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+
+    /**
+     * @param string $xmlFilePath
+     *
+     * @throws \Spryker\Service\UtilEncoding\Exception\XmlReadException
+     *
+     * @return array<mixed>
+     */
+    public function convertXmlFileToArray(string $xmlFilePath): array;
 }

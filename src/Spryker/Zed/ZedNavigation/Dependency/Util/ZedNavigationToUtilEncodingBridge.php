@@ -51,4 +51,14 @@ class ZedNavigationToUtilEncodingBridge implements ZedNavigationToUtilEncodingIn
         /** @phpstan-var array<mixed>|null */
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
+
+    /**
+     * @param string $xmlFilePath
+     *
+     * @return array<mixed>
+     */
+    public function convertXmlFileToArray(string $xmlFilePath): array
+    {
+        return $this->utilEncodingService->convertXmlFileToArray($xmlFilePath);
+    }
 }
